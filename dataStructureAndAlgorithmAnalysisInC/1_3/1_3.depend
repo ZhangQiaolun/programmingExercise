@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1473657766 source:c:\users\zhang\documents\project\programmingexercise\datastructureandalgorithmanalysisinc\1_3\main.c
+	<stdio.h>
+	<stdlib.h>
+
