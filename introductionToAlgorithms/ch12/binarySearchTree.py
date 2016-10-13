@@ -33,4 +33,19 @@ class BinarySearchTree(object):
                 tree = tree.right
         return tree
 
+    def insert(self, x):
+        if x<self.key:
+            if self.left:
+                self.left.insert(x)
+            else:
+                tree=BinarySearchTree(x)
+                self.left=tree
+        elif x>self.key:
+            if self.right:
+                self.right.insert(x)
+            else:
+                tree = BinarySearchTree(x)
+                self.right = tree
 
+    def delete(self, x):
+        if self.find(x):
