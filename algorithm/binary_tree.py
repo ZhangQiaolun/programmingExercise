@@ -48,3 +48,108 @@ class Node:
             return self.right.lookup(data, self)
         else:
             return self, parent
+
+    def delete(self, data):
+        """Delete node containing data
+        @param data node's content to delete
+        """
+        # get node containing data
+        node, parent = self.lookup(data)
+        if node is not None:
+            children_count = node.children_count()
+        if children_count == 0:
+            if parent:
+                if parent.left is node:
+                    parent.left = None
+                else:
+                    parent.right = None
+                del node
+            else:
+                self.data = None
+        elif children_count == 1:
+            # if children has 1 child
+            # replace node with its child
+            if node.left:
+                n = node.left
+            else:
+                n = node.right
+            if parent:
+                if parent.left is node:
+                    parent.left = n
+                if parent.right is node:
+                    parent.left = n
+                del node
+            else:
+                self.left = n.left
+                self.right = n.right
+                self.data = n.data
+        else:
+            # if node has 2 children
+            # find its successor
+            parent = node
+            successor = node.right
+            while successor.left:
+                parent = successor
+                successor = successor.left
+            # replace node data by its successor data
+            node.data = successor.data
+            # fix successor's parent's child
+            if parent.left == successor:
+                parent.left = successor.right
+            else:
+                parent.right = successor.right
+    def children_count(self):
+        """
+        Returns the number of children
+        @returns number of children: 0, 1, 2
+        """
+        cnt = 0
+        if self.left:
+            cnt += 1
+        if self.right:
+            cnt += 1
+        return cnt
+
+    def print_tree(self):
+        """
+        Print tree content inorder
+        """
+        if self.left:
+            self.left.print_tree()
+        print self.data,
+        if seft.right:
+            self.right.print_tree()
+
+    def compare_trees(self, node):
+        """
+        Compare 2 trees
+
+        @param node tree's root node to compare to
+        @returns True if the tree passed is identical to this tree
+        """
+        if node is None:
+            return False
+        if self.data != node.data:
+            return False
+        res = True
+        if self.left is None:
+            if node.left:
+                return False
+        else:
+            res = self.left.compare_trees(node.left)
+        if res is False:
+            return False
+        if self.right is None:
+            if node.right:
+                return False
+        else:
+            res = self.right.compare_trees(node.right)
+        return res
+    def tree_data(self):
+        """
+        Generator to get tree nodes data
+        """
+        # we use a stack to traverse the tree in a non-recursive way
+        stack = []
+        node = self
+        while stack or node
